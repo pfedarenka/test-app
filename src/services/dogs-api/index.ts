@@ -13,7 +13,7 @@ const getBreeds = async (): Promise<{ [breed: string]: string[] }> => {
   return data.message;
 };
 
-const getImage = async (breed: string, sub: string): Promise<string> => {
+const getRandomBreed = async (breed: string, sub: string): Promise<string> => {
   const path = isNull(sub)
     ? `breed/${breed}/images/random`
     : `breed/${breed}/${sub}/images/random`;
@@ -27,4 +27,4 @@ const getImage = async (breed: string, sub: string): Promise<string> => {
   return data.message;
 };
 
-export { getBreeds, getImage };
+export { getBreeds, getRandomBreed };

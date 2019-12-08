@@ -8,7 +8,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 const VictoryPage: FunctionComponent = () => {
-  const classes = useStyles();
+  const classes = useStyles({});
 
   return (
     <Grid className={classes.root}>

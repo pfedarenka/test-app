@@ -8,7 +8,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 const CorrectAnswerPage: FunctionComponent = () => {
-  const classes = useStyles();
+  const classes = useStyles({});
 
   return (
     <Grid className={classes.root}>

@@ -1,9 +1,12 @@
 import {
-  GameState,
   GameActionsTypes,
+  GameState,
+  FAIL_ALL_BREEDS,
   REQUEST_ALL_BREEDS,
   SUCCESS_ALL_BREEDS,
-  FAIL_ALL_BREEDS,
+  REQUEST_NEXT_QUESTION,
+  SUCCESS_NEXT_QUESTION,
+  FAIL_NEXT_QUESTION,
 } from './types';
 
 const initialState: GameState = {
@@ -12,6 +15,14 @@ const initialState: GameState = {
   breedsLoading: false,
   breedNames: [],
   isResult: false,
+  choices: [],
+  chosenAnswer: null,
+  correctAnswer: null,
+  errorMessage: null,
+  image: null,
+  loading: false,
+  isCorrect: null,
+  isLegal: false,
 };
 
 const gameReducer = (
@@ -33,9 +44,8 @@ const gameReducer = (
           breedNames.push(breed.toLowerCase());
         } else {
           breedNames.push(
-            ...action.breeds[breed].map(
-              (sub: string) => `${sub.toLowerCase()} ${breed.toLowerCase()}`,
-            ),
+            ...action.breeds[breed]
+              .map((sub: string) => `${sub.toLowerCase()} ${breed.toLowerCase()}`),
           );
         }
       });
@@ -46,6 +56,7 @@ const gameReducer = (
         breeds: action.breeds,
         error: null,
         breedsLoading: false,
+        isLegal: true,
       };
     }
 
@@ -53,6 +64,35 @@ const gameReducer = (
       return {
         ...state,
         error: action.errorMessage,
+        loading: false,
+      };
+
+    case REQUEST_NEXT_QUESTION:
+      return {
+        ...state,
+        choices: [],
+        chosenAnswer: null,
+        correctAnswer: null,
+        errorMessage: null,
+        image: null,
+        loading: true,
+        isCorrect: null,
+      };
+
+    case SUCCESS_NEXT_QUESTION:
+      return {
+        ...state,
+        choices: action.choices.sort(),
+        correctAnswer: action.correctAnswer,
+        errorMessage: null,
+        image: action.imageUrl,
+        loading: false,
+      };
+
+    case FAIL_NEXT_QUESTION:
+      return {
+        ...state,
+        errorMessage: action.errorMessage,
         loading: false,
       };
 
