@@ -2,11 +2,13 @@ import {
   GameActionsTypes,
   GameState,
   FAIL_ALL_BREEDS,
-  REQUEST_ALL_BREEDS,
-  SUCCESS_ALL_BREEDS,
-  REQUEST_NEXT_QUESTION,
-  SUCCESS_NEXT_QUESTION,
   FAIL_NEXT_QUESTION,
+  INIT_CHOOSE,
+  REQUEST_ALL_BREEDS,
+  REQUEST_NEXT_QUESTION,
+  RESTART_QUIZ,
+  SUCCESS_ALL_BREEDS,
+  SUCCESS_NEXT_QUESTION,
 } from './types';
 
 const initialState: GameState = {
@@ -23,6 +25,7 @@ const initialState: GameState = {
   loading: false,
   isCorrect: null,
   isLegal: false,
+  correctCount: 0,
 };
 
 const gameReducer = (
@@ -94,6 +97,25 @@ const gameReducer = (
         ...state,
         errorMessage: action.errorMessage,
         loading: false,
+      };
+
+    case INIT_CHOOSE:
+      return {
+        ...state,
+        chosenAnswer: action.choose,
+        correctCount:
+          action.choose === state.correctAnswer
+            ? state.correctCount + 1
+            : state.correctCount,
+      };
+
+    case RESTART_QUIZ:
+      return {
+        ...state,
+        choices: [],
+        chosenAnswer: null,
+        correctCount: 0,
+        correctAnswer: null,
       };
 
     default:

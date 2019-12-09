@@ -1,3 +1,12 @@
+export const REQUEST_ALL_BREEDS = 'REQUEST_ALL_BREEDS';
+export const SUCCESS_ALL_BREEDS = 'SUCCESS_ALL_BREEDS';
+export const FAIL_ALL_BREEDS = 'FAIL_ALL_BREEDS';
+export const REQUEST_NEXT_QUESTION = 'REQUEST_NEXT_QUESTION';
+export const SUCCESS_NEXT_QUESTION = 'SUCCESS_NEXT_QUESTION';
+export const FAIL_NEXT_QUESTION = 'FAIL_NEXT_QUESTION';
+export const INIT_CHOOSE = 'INIT_CHOOSE';
+export const RESTART_QUIZ = 'RESTART_QUIZ';
+
 export interface GameState {
   breeds: { [breed: string]: Array<string> };
   error: string;
@@ -12,14 +21,8 @@ export interface GameState {
   loading: boolean;
   isCorrect: boolean;
   isLegal: boolean;
+  correctCount: number;
 }
-
-export const REQUEST_ALL_BREEDS = 'REQUEST_ALL_BREEDS';
-export const SUCCESS_ALL_BREEDS = 'SUCCESS_ALL_BREEDS';
-export const FAIL_ALL_BREEDS = 'FAIL_ALL_BREEDS';
-export const REQUEST_NEXT_QUESTION = 'REQUEST_NEXT_QUESTION';
-export const SUCCESS_NEXT_QUESTION = 'SUCCESS_NEXT_QUESTION';
-export const FAIL_NEXT_QUESTION = 'FAIL_NEXT_QUESTION';
 
 interface RequestAllAction {
   type: typeof REQUEST_ALL_BREEDS;
@@ -51,9 +54,20 @@ interface NextQuestionFailAction {
   errorMessage: string;
 }
 
+interface ChooseAction {
+  type: typeof INIT_CHOOSE;
+  choose: string;
+}
+
+interface RestartAction {
+  type: typeof RESTART_QUIZ;
+}
+
 export type GameActionsTypes = RequestAllAction
 | SuccessAllAction
 | FailureAllAction
 | NextQuestionAction
 | NextQuestionSuccessAction
-| NextQuestionFailAction;
+| NextQuestionFailAction
+| ChooseAction
+| RestartAction;

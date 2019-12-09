@@ -1,31 +1,72 @@
 import React, { FunctionComponent, useCallback, useEffect } from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { makeStyles, Theme } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../store/game/actions';
+import { AppState } from '../../store';
+import QuizButtons from '../../components/QuizButtons';
+import history from '../../helpers/history';
+import apiPath from '../../constants/api-path';
 
-const styles = {
-  root: {},
-};
+const styles = (theme: Theme) => ({
+  root: {
+    height: '100%',
+    maxWidth: 700,
+  },
+  title: {
+    color: theme.palette.primary.contrastText,
+  },
+  picture: {
+    margin: 10,
+  },
+});
 
 const useStyles = makeStyles(styles);
 
 const QuestionPage: FunctionComponent = () => {
   const classes = useStyles({});
+  const {
+    correctCount, image, choices, correctAnswer,
+  } = useSelector(
+    (state: AppState) => state.game,
+  );
 
   const dispatch = useDispatch();
-  const { initQuestion } = actions;
+  const { initQuestion, initChoose } = actions;
   const dispatchNextQuestion = useCallback(
     () => dispatch(initQuestion()),
     [dispatch, initQuestion],
   );
 
+  const dispatchInitChoose = (breed: string) => dispatch(initChoose(breed));
+
   useEffect(() => {
     dispatchNextQuestion();
   }, [dispatchNextQuestion]);
 
+  const buttonClick = (breed: string) => {
+    if (breed === correctAnswer) {
+      dispatchInitChoose(breed);
+      history.push(apiPath.correct);
+    } else {
+      history.push(apiPath.gameOver);
+    }
+  };
+
   return (
-    <Grid className={classes.root}>
-      QUIZ PAGE
+    <Grid container direction="column" wrap="nowrap" alignItems="center" justify="center" className={classes.root}>
+      <Grid container direction="column" wrap="nowrap" alignItems="center" justify="center" className={classes.title}>
+        <Typography variant="h4">{`${correctCount}/16`}</Typography>
+        <Typography variant="h5">Which breed is this dog?</Typography>
+      </Grid>
+      <Grid className={classes.picture}>
+        <img src={image} alt="breed" width="300" />
+      </Grid>
+      <QuizButtons
+        choices={choices}
+        click={buttonClick}
+      />
     </Grid>
   );
 };

@@ -7,6 +7,8 @@ import {
   REQUEST_NEXT_QUESTION,
   SUCCESS_NEXT_QUESTION,
   FAIL_NEXT_QUESTION,
+  INIT_CHOOSE,
+  RESTART_QUIZ,
 } from './types';
 
 const getProbablyAnswers = (breedNames): string[] => {
@@ -68,7 +70,18 @@ const initQuestion = () => (
   }
 );
 
+const initChoose = (choose: string) => ({
+  type: INIT_CHOOSE,
+  choose,
+});
+
+export const restartQuiz = () => ({
+  type: RESTART_QUIZ,
+});
+
 export default {
   getAllBreeds,
   initQuestion,
+  initChoose,
+  restartQuiz,
 };
