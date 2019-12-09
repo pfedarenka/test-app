@@ -2,16 +2,16 @@ import React, { FunctionComponent } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../store';
 import history from '../../helpers/history';
 import apiPath from '../../constants/api-path';
 import actions from '../../store/game/actions';
+import DogButton from '../../components/DogButton';
 
 const styles = (theme: Theme) => ({
   root: {
-    height: '100%',
+    flex: 1,
   },
   title: {
     color: theme.palette.primary.contrastText,
@@ -19,10 +19,8 @@ const styles = (theme: Theme) => ({
   picture: {
     margin: 10,
   },
-  button: {
-    marginTop: 20,
-    border: `1px solid ${theme.palette.primary.contrastText}`,
-    color: theme.palette.primary.contrastText,
+  buttonContainer: {
+    marginTop: 10,
   },
 });
 
@@ -50,15 +48,12 @@ const GameOverPage: FunctionComponent = () => {
         <img src={image} alt="breed" width="300" />
       </Grid>
       <Typography variant="h4" className={classes.title}>{`This dog is a ${correctAnswer}`}</Typography>
-      <Button
-        size="large"
-        variant="outlined"
-        color="primary"
-        className={classes.button}
-        onClick={() => handleClickAgain()}
-      >
-        Play Again
-      </Button>
+      <Grid className={classes.buttonContainer}>
+        <DogButton
+          click={() => handleClickAgain()}
+          title="Play Again"
+        />
+      </Grid>
     </Grid>
   );
 };

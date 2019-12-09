@@ -13,6 +13,9 @@ const styles = (theme: Theme) => ({
     border: `1px solid ${theme.palette.primary.contrastText}`,
     color: theme.palette.primary.contrastText,
     width: '100%',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+    },
   },
   container: {
     padding: '5px 5px 0 0',

@@ -13,7 +13,7 @@ const WON_CONDITION = 15;
 
 const styles = (theme: Theme) => ({
   root: {
-    height: '100%',
+    flex: 1,
     maxWidth: 700,
   },
   title: {

@@ -2,21 +2,19 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 import history from '../../helpers/history';
 import apiPath from '../../constants/api-path';
+import DogButton from '../../components/DogButton';
 
 const styles = (theme: Theme) => ({
   root: {
-    height: '100%',
+    flex: 1,
   },
   title: {
     color: theme.palette.primary.contrastText,
   },
-  button: {
+  buttonContainer: {
     marginTop: 20,
-    border: `1px solid ${theme.palette.primary.contrastText}`,
-    color: theme.palette.primary.contrastText,
   },
 });
 
@@ -61,15 +59,12 @@ const CorrectAnswerPage: FunctionComponent = () => {
           {`Next question in ${count / 1000} seconds`}
         </Typography>
       </Grid>
-      <Button
-        size="large"
-        variant="outlined"
-        color="primary"
-        className={classes.button}
-        onClick={() => handleClickNext()}
-      >
-        Next Question
-      </Button>
+      <Grid className={classes.buttonContainer}>
+        <DogButton
+          click={() => handleClickNext()}
+          title="Next Question"
+        />
+      </Grid>
     </Grid>
   );
 };

@@ -13,14 +13,14 @@ import {
 
 const getProbablyAnswers = (breedNames): string[] => {
   const answerCount = Math.min(4, breedNames.length);
-  const answers: string[] = [];
-  while (answers.length < answerCount) {
-    const idx = Math.floor(Math.random() * breedNames.length);
-    if (answers.indexOf(breedNames[idx].toLowerCase()) === -1) {
-      answers.push(breedNames[idx].toLowerCase());
+  const probablyAnswers: string[] = [];
+  while (probablyAnswers.length < answerCount) {
+    const random = Math.floor(Math.random() * breedNames.length);
+    if (probablyAnswers.indexOf(breedNames[random].toLowerCase()) === -1) {
+      probablyAnswers.push(breedNames[random].toLowerCase());
     }
   }
-  return answers;
+  return probablyAnswers;
 };
 
 const getAllBreeds = () => (
@@ -50,11 +50,12 @@ const initQuestion = () => (
     const choices = getProbablyAnswers(breedNames);
     const correctAnswer = choices[Math.floor(Math.random() * choices.length)];
     const splitAnswer = correctAnswer.split(' ');
-    const breed = splitAnswer[splitAnswer.length - 1];
-    const sub = splitAnswer.length === 1 ? null : splitAnswer.slice(0, splitAnswer.length - 1).join(' ');
+    const answerLength = splitAnswer.length;
+    const breed = splitAnswer[answerLength - 1];
+    const subBreed = answerLength === 1 ? null : splitAnswer.slice(0, answerLength - 1).join(' ');
 
     try {
-      const imageUrl = await getRandomBreed(breed, sub);
+      const imageUrl = await getRandomBreed(breed, subBreed);
       dispatch({
         choices,
         correctAnswer,
