@@ -1,4 +1,5 @@
 import { getBreeds, getRandomBreed } from '../../services/dogs-api';
+import getProbablyAnswers from '../../helpers/randomizer';
 import {
   GameActionsTypes,
   REQUEST_ALL_BREEDS,
@@ -10,19 +11,6 @@ import {
   INIT_CHOOSE,
   RESTART_QUIZ,
 } from './types';
-
-const COUNT_OF_ANSWERS = 4;
-
-const getProbablyAnswers = (breedNames): string[] => {
-  const probablyAnswers: string[] = [];
-  while (probablyAnswers.length < COUNT_OF_ANSWERS) {
-    const random = Math.floor(Math.random() * breedNames.length);
-    if (probablyAnswers.indexOf(breedNames[random].toLowerCase()) === -1) {
-      probablyAnswers.push(breedNames[random].toLowerCase());
-    }
-  }
-  return probablyAnswers;
-};
 
 const getAllBreeds = () => (
   async (dispatch: (action: GameActionsTypes) => void) => {
@@ -38,7 +26,7 @@ const getAllBreeds = () => (
     } catch (err) {
       dispatch({
         type: FAIL_ALL_BREEDS,
-        errorMessage: 'Error',
+        errorMessage: 'Error with network',
       });
     }
   }
@@ -58,15 +46,15 @@ const initQuestion = () => (
     try {
       const imageUrl = await getRandomBreed(breed, subBreed);
       dispatch({
-        choices,
         correctAnswer,
+        choices,
         imageUrl,
         type: SUCCESS_NEXT_QUESTION,
       });
     } catch (err) {
       dispatch({
-        errorMessage: 'Error',
         type: FAIL_NEXT_QUESTION,
+        errorMessage: 'Error with network',
       });
     }
   }
