@@ -11,10 +11,11 @@ import {
   RESTART_QUIZ,
 } from './types';
 
+const COUNT_OF_ANSWERS = 4;
+
 const getProbablyAnswers = (breedNames): string[] => {
-  const answerCount = Math.min(4, breedNames.length);
   const probablyAnswers: string[] = [];
-  while (probablyAnswers.length < answerCount) {
+  while (probablyAnswers.length < COUNT_OF_ANSWERS) {
     const random = Math.floor(Math.random() * breedNames.length);
     if (probablyAnswers.indexOf(breedNames[random].toLowerCase()) === -1) {
       probablyAnswers.push(breedNames[random].toLowerCase());

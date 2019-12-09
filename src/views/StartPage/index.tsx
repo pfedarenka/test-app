@@ -15,6 +15,10 @@ const styles = (theme: Theme) => ({
   title: {
     color: theme.palette.primary.contrastText,
   },
+  subTitle: {
+    marginTop: 10,
+    lineHeight: '98%',
+  },
   buttonContainer: {
     marginTop: 20,
   },
@@ -48,7 +52,16 @@ const StartPage: FunctionComponent = () => {
 
   return (
     <Grid container direction="column" wrap="nowrap" alignItems="center" justify="center" className={classes.root}>
-      <Typography variant="h2" className={classes.title}>Who wants to be a dogellionare?</Typography>
+      <Grid className={classes.title}>
+        <Typography variant="h2">Who wants to be a dogellionare?</Typography>
+        <Typography variant="subtitle1" align="center" className={classes.subTitle}>
+          It’s a quiz which will test your knowledge of dogs breeds.
+          <br />
+          You will be given an image of a dog and 4 answers.
+          <br />
+          Let’s see how good are you at knowing your good boys and girls.
+        </Typography>
+      </Grid>
       <Grid className={classes.buttonContainer}>
         <DogButton
           disabled={breedsLoading}
