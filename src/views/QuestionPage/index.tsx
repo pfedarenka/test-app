@@ -9,6 +9,8 @@ import QuizButtons from '../../components/QuizButtons';
 import history from '../../helpers/history';
 import apiPath from '../../constants/api-path';
 
+const WON_CONDITION = 15;
+
 const styles = (theme: Theme) => ({
   root: {
     height: '100%',
@@ -27,7 +29,7 @@ const useStyles = makeStyles(styles);
 const QuestionPage: FunctionComponent = () => {
   const classes = useStyles({});
   const {
-    correctCount, image, choices, correctAnswer,
+    correctCount, image, choices, correctAnswer, loading,
   } = useSelector(
     (state: AppState) => state.game,
   );
@@ -47,12 +49,22 @@ const QuestionPage: FunctionComponent = () => {
 
   const buttonClick = (breed: string) => {
     if (breed === correctAnswer) {
+      if (correctCount === WON_CONDITION) {
+        history.push(apiPath.victory);
+        return;
+      }
       dispatchInitChoose(breed);
       history.push(apiPath.correct);
     } else {
       history.push(apiPath.gameOver);
     }
   };
+
+  if (loading) {
+    return (
+      <Grid>Loading...</Grid>
+    );
+  }
 
   return (
     <Grid container direction="column" wrap="nowrap" alignItems="center" justify="center" className={classes.root}>

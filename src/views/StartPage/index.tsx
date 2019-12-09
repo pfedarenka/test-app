@@ -50,9 +50,7 @@ const StartPage: FunctionComponent = () => {
 
   return (
     <Grid container direction="column" wrap="nowrap" alignItems="center" justify="center" className={classes.root}>
-      <Typography variant="h2" className={classes.title}>
-        Who wants to be a dogellionare?
-      </Typography>
+      <Typography variant="h2" className={classes.title}>Who wants to be a dogellionare?</Typography>
       <Button
         disabled={breedsLoading}
         size="large"

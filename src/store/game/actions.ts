@@ -75,7 +75,7 @@ const initChoose = (choose: string) => ({
   choose,
 });
 
-export const restartQuiz = () => ({
+const restartQuiz = () => ({
   type: RESTART_QUIZ,
 });
 

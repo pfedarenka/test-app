@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from '../../store';
 import history from '../../helpers/history';
 import apiPath from '../../constants/api-path';
-import { restartQuiz } from '../../store/game/actions';
+import actions from '../../store/game/actions';
 
 const styles = (theme: Theme) => ({
   root: {
@@ -30,6 +30,7 @@ const useStyles = makeStyles(styles);
 
 const GameOverPage: FunctionComponent = () => {
   const classes = useStyles({});
+  const { restartQuiz } = actions;
   const dispatch = useDispatch();
   const dispatchRestartQuiz = () => dispatch(restartQuiz());
 
@@ -48,9 +49,7 @@ const GameOverPage: FunctionComponent = () => {
       <Grid className={classes.picture}>
         <img src={image} alt="breed" width="300" />
       </Grid>
-      <Typography variant="h4" className={classes.title}>
-        {`This dog is a ${correctAnswer}`}
-      </Typography>
+      <Typography variant="h4" className={classes.title}>{`This dog is a ${correctAnswer}`}</Typography>
       <Button
         size="large"
         variant="outlined"
