@@ -62,7 +62,9 @@ const QuestionPage: FunctionComponent = () => {
 
   if (loading) {
     return (
-      <Grid>Loading...</Grid>
+      <Grid container direction="column" wrap="nowrap" alignItems="center" justify="center" className={classes.root}>
+        <Typography variant="h5" className={classes.title}>Loading...</Typography>
+      </Grid>
     );
   }
 
